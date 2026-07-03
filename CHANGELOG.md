@@ -7,6 +7,10 @@
     to update the actual links at the bottom of the file.
 -->
 
+### Unreleased
+
+* Update dynamic background color to match AOSP Settings ([PR #15])
+
 ### Version 2.1
 
 * Update target API version to API 37 (Android 17) ([PR #14])
@@ -53,3 +57,4 @@
 [PR #12]: https://github.com/chenxiaolong/MirrorMobile/pull/12
 [PR #13]: https://github.com/chenxiaolong/MirrorMobile/pull/13
 [PR #14]: https://github.com/chenxiaolong/MirrorMobile/pull/14
+[PR #15]: https://github.com/chenxiaolong/MirrorMobile/pull/15

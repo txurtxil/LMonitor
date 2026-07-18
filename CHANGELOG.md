@@ -10,6 +10,7 @@
 ### Unreleased
 
 * Update dynamic background color to match AOSP Settings ([PR #15])
+* Update dependencies ([PR #16])
 
 ### Version 2.1
 
@@ -58,3 +59,4 @@
 [PR #13]: https://github.com/chenxiaolong/MirrorMobile/pull/13
 [PR #14]: https://github.com/chenxiaolong/MirrorMobile/pull/14
 [PR #15]: https://github.com/chenxiaolong/MirrorMobile/pull/15
+[PR #16]: https://github.com/chenxiaolong/MirrorMobile/pull/16

@@ -7,6 +7,10 @@
     to update the actual links at the bottom of the file.
 -->
 
+### Unreleased
+
+* Update dependencies ([PR #17])
+
 ### Version 2.2
 
 * Update dynamic background color to match AOSP Settings ([PR #15])
@@ -60,3 +64,4 @@
 [PR #14]: https://github.com/chenxiaolong/MirrorMobile/pull/14
 [PR #15]: https://github.com/chenxiaolong/MirrorMobile/pull/15
 [PR #16]: https://github.com/chenxiaolong/MirrorMobile/pull/16
+[PR #17]: https://github.com/chenxiaolong/MirrorMobile/pull/17

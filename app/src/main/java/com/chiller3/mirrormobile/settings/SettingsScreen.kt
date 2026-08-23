@@ -27,11 +27,11 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.core.net.toUri
 import androidx.lifecycle.viewmodel.compose.viewModel
-import com.chiller3.mirrormobile.BuildConfig
+import com.txurtxil.lmonitor.BuildConfig
 import com.chiller3.mirrormobile.Logcat
 import com.chiller3.mirrormobile.Permissions
 import com.chiller3.mirrormobile.Preferences
-import com.chiller3.mirrormobile.R
+import com.txurtxil.lmonitor.R
 import com.chiller3.mirrormobile.extension.formattedString
 import com.chiller3.mirrormobile.ui.AppScreen
 import com.chiller3.mirrormobile.ui.BetterSegmentedShapes
@@ -51,6 +51,7 @@ fun SettingsScreen(viewModel: SettingsViewModel = viewModel()) {
     var reloadPrefs by remember { mutableIntStateOf(0) }
     val autoStart = remember(reloadPrefs) { prefs.autoStart }
     val wakeLock = remember(reloadPrefs) { prefs.wakeLock }
+    val speedThreshold = remember(reloadPrefs) { prefs.speedThreshold }
     val isDebugMode = remember(reloadPrefs) { prefs.isDebugMode }
 
     var reloadPerms by remember { mutableIntStateOf(0) }
@@ -106,6 +107,7 @@ fun SettingsScreen(viewModel: SettingsViewModel = viewModel()) {
             speedGranted = speedGranted,
             autoStart = autoStart,
             wakeLock = wakeLock,
+            speedThreshold = speedThreshold,
             isDebugMode = isDebugMode,
             onNotificationsGrant = {
                 requestPermissions.launch(Permissions.NOTIFICATIONS)
@@ -119,6 +121,13 @@ fun SettingsScreen(viewModel: SettingsViewModel = viewModel()) {
             },
             onWakeLockChange = { enabled ->
                 prefs.wakeLock = enabled
+                reloadPrefs++
+            },
+            onSpeedThresholdCycle = {
+                val presets = Preferences.SPEED_THRESHOLD_PRESETS
+                val idx = presets.indexOfFirst { it == prefs.speedThreshold }
+                    .let { if (it == -1) 0 else it }
+                prefs.speedThreshold = presets[(idx + 1) % presets.size]
                 reloadPrefs++
             },
             onDebugModeChange = { enabled ->
@@ -148,11 +157,13 @@ private fun SettingsContent(
     speedGranted: Boolean,
     autoStart: Boolean,
     wakeLock: Boolean,
+    speedThreshold: Float,
     isDebugMode: Boolean,
     onNotificationsGrant: () -> Unit,
     onSpeedGrant: () -> Unit,
     onAutoStartChange: (Boolean) -> Unit,
     onWakeLockChange: (Boolean) -> Unit,
+    onSpeedThresholdCycle: () -> Unit,
     onDebugModeChange: (Boolean) -> Unit,
     onSourceRepoOpen: () -> Unit,
     onSaveLogs: () -> Unit,
@@ -226,9 +237,27 @@ private fun SettingsContent(
             SwitchPreference(
                 checked = wakeLock,
                 onCheckedChange = onWakeLockChange,
-                shapes = BetterSegmentedShapes.bottom(),
+                shapes = BetterSegmentedShapes.middle(),
                 title = { Text(text = stringResource(R.string.pref_wake_lock_name)) },
                 summary = { Text(text = stringResource(R.string.pref_wake_lock_desc)) },
+                modifier = Modifier.animateItem(),
+            )
+        }
+
+        item(key = "speed_threshold") {
+            Preference(
+                onClick = onSpeedThresholdCycle,
+                shapes = BetterSegmentedShapes.bottom(),
+                title = { Text(text = stringResource(R.string.pref_speed_threshold_name)) },
+                summary = {
+                    Text(
+                        text = stringResource(
+                            R.string.pref_speed_threshold_desc,
+                            speedThreshold,
+                            speedThreshold * 3.6f,
+                        )
+                    )
+                },
                 modifier = Modifier.animateItem(),
             )
         }
@@ -299,11 +328,13 @@ private fun PreviewSettingsScreen() {
                 speedGranted = false,
                 autoStart = true,
                 wakeLock = true,
+                speedThreshold = Preferences.SPEED_THRESHOLD_PRESETS[0],
                 isDebugMode = true,
                 onNotificationsGrant = {},
                 onSpeedGrant = {},
                 onAutoStartChange = {},
                 onWakeLockChange = {},
+                onSpeedThresholdCycle = {},
                 onDebugModeChange = {},
                 onSourceRepoOpen = {},
                 onSaveLogs = {},

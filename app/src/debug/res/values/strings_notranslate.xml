@@ -3,5 +3,5 @@
     SPDX-License-Identifier: GPL-3.0-only
 -->
 <resources>
-    <string name="app_name" translatable="false">MirrorMobile (Debug)</string>
+    <string name="app_name" translatable="false">LMonitor (Debug)</string>
 </resources>

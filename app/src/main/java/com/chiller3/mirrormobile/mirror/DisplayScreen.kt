@@ -33,7 +33,7 @@ import androidx.lifecycle.DefaultLifecycleObserver
 import androidx.lifecycle.LifecycleOwner
 import com.chiller3.mirrormobile.Permissions
 import com.chiller3.mirrormobile.Preferences
-import com.chiller3.mirrormobile.R
+import com.txurtxil.lmonitor.R
 
 class DisplayScreen(carContext: CarContext) : Screen(carContext), DefaultLifecycleObserver,
     SharedPreferences.OnSharedPreferenceChangeListener, ServiceConnection, CaptureService.Listener,
@@ -259,7 +259,7 @@ class DisplayScreen(carContext: CarContext) : Screen(carContext), DefaultLifecyc
         Log.d(TAG, "Speed: $data")
 
         val isDriving = if (data.displaySpeedMetersPerSecond.status == CarValue.STATUS_SUCCESS) {
-            data.displaySpeedMetersPerSecond.value!! >= 0.001f
+            data.displaySpeedMetersPerSecond.value!! >= prefs.speedThreshold
         } else {
             Log.w(TAG, "Speed not available: $data")
             // Assume that we're driving if we don't know.

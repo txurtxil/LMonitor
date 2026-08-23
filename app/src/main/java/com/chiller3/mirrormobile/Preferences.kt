@@ -16,6 +16,12 @@ class Preferences(context: Context) {
         const val PREF_DEBUG_MODE = "debug_mode"
         private const val PREF_AUTO_START = "auto_start"
         private const val PREF_WAKE_LOCK = "wake_lock"
+        private const val PREF_SPEED_THRESHOLD = "speed_threshold"
+
+        // Presets del umbral de velocidad (m/s), se ciclan al tocar la preferencia.
+        // 0.001f es el valor original de upstream; se mantiene como preset[0] para que
+        // el comportamiento no cambie salvo que el usuario elija otro explícitamente.
+        val SPEED_THRESHOLD_PRESETS = floatArrayOf(0.001f, 0.5f, 1.0f, 1.5f, 2.0f)
     }
 
     private val prefs = PreferenceManager.getDefaultSharedPreferences(context)
@@ -39,4 +45,8 @@ class Preferences(context: Context) {
     var wakeLock: Boolean
         get() = prefs.getBoolean(PREF_WAKE_LOCK, true)
         set(enabled) = prefs.edit { putBoolean(PREF_WAKE_LOCK, enabled) }
+
+    var speedThreshold: Float
+        get() = prefs.getFloat(PREF_SPEED_THRESHOLD, SPEED_THRESHOLD_PRESETS[0])
+        set(value) = prefs.edit { putFloat(PREF_SPEED_THRESHOLD, value) }
 }

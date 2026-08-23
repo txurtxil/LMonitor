@@ -26,7 +26,7 @@ import androidx.core.app.ServiceCompat
 import androidx.core.content.IntentCompat
 import com.chiller3.mirrormobile.Notifications
 import com.chiller3.mirrormobile.Preferences
-import com.chiller3.mirrormobile.R
+import com.txurtxil.lmonitor.R
 
 class CaptureService : Service() {
     companion object {

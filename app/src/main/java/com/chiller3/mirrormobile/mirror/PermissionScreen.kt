@@ -16,7 +16,7 @@ import androidx.car.app.model.OnClickListener
 import androidx.car.app.model.ParkedOnlyOnClickListener
 import androidx.car.app.model.Template
 import com.chiller3.mirrormobile.Permissions
-import com.chiller3.mirrormobile.R
+import com.txurtxil.lmonitor.R
 
 class PermissionScreen(carContext: CarContext) : Screen(carContext), OnClickListener,
     OnRequestPermissionsListener {

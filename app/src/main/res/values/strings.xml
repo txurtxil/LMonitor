@@ -18,6 +18,8 @@
     <string name="pref_auto_start_desc">Immediately request screen mirroring permissions when opening the app in Android Auto.</string>
     <string name="pref_wake_lock_name">Keep screen on</string>
     <string name="pref_wake_lock_desc">Prevent the screen from turning off while mirroring is active. The screen will still dim when idle.</string>
+    <string name="pref_speed_threshold_name">Driving speed threshold</string>
+    <string name="pref_speed_threshold_desc">Screen mirroring pauses at or above this speed. Currently: %1$.3f m/s (%2$.1f km/h). Tap to cycle through presets.</string>
     <string name="pref_version_name">Version</string>
     <string name="pref_save_logs_name">Save logs</string>
     <string name="pref_save_logs_desc">Save logcat logs to a file.</string>

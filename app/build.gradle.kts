@@ -102,25 +102,25 @@ val gitVersionTriple = describeVersion(git)
 val gitVersionCode = getVersionCode(gitVersionTriple)
 val gitVersionName = getVersionName(git, gitVersionTriple)
 
-val projectUrl = "https://github.com/chenxiaolong/MirrorMobile"
+val projectUrl = "https://github.com/txurtxil/LMonitor"
 
 val extraDir = layout.buildDirectory.map { it.dir("extra") }
 val archiveDir = extraDir.map { it.dir("archive") }
 
 android {
-    namespace = "com.chiller3.mirrormobile"
+    namespace = "com.txurtxil.lmonitor"
 
     compileSdk = 37
     buildToolsVersion = "37.0.0"
 
     defaultConfig {
-        applicationId = "com.chiller3.mirrormobile"
+        applicationId = "com.txurtxil.lmonitor"
         minSdk = 29
         targetSdk = 37
         versionCode = gitVersionCode
         versionName = gitVersionName
 
-        base.archivesName.set("MirrorMobile-$versionName")
+        base.archivesName.set("LMonitor-$versionName")
 
         buildConfigField("String", "PROJECT_URL_AT_COMMIT",
             "\"${projectUrl}/tree/${gitVersionTriple.third.name}\"")

@@ -6,6 +6,7 @@
 package com.chiller3.mirrormobile
 
 import android.app.Notification
+import com.txurtxil.lmonitor.R
 import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.content.Context

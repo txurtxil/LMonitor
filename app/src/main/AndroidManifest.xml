@@ -13,6 +13,13 @@
     <uses-permission android:name="androidx.car.app.NAVIGATION_TEMPLATES" />
     <uses-permission android:name="com.google.android.gms.permission.CAR_SPEED" />
 
+    <queries>
+        <intent>
+            <action android:name="android.intent.action.MAIN" />
+            <category android:name="android.intent.category.LAUNCHER" />
+        </intent>
+    </queries>
+
     <application
         android:name="com.chiller3.mirrormobile.MainApplication"
         android:icon="@mipmap/ic_launcher"
@@ -45,6 +52,14 @@
             android:taskAffinity=""
             android:excludeFromRecents="true"
             android:theme="@android:style/Theme.Translucent.NoTitleBar" />
+
+        <activity
+            android:name="com.chiller3.mirrormobile.launcher.LauncherActivity"
+            android:exported="false" />
+
+        <activity
+            android:name="com.chiller3.mirrormobile.launcher.LauncherConfigActivity"
+            android:exported="false" />
 
         <service
             android:name="com.chiller3.mirrormobile.mirror.CaptureService"

@@ -6,6 +6,7 @@
     <!-- Preference headers -->
     <string name="pref_header_permissions">Permisos</string>
     <string name="pref_header_behavior">Comportamiento</string>
+    <string name="pref_header_launcher">Launcher</string>
     <string name="pref_header_about">Acerca de</string>
     <string name="pref_header_debug">Depuración</string>
 
@@ -20,9 +21,15 @@
     <string name="pref_wake_lock_desc">Evita que la pantalla se apague mientras el mirroring está activo. Seguirá atenuándose si no hay actividad.</string>
     <string name="pref_speed_threshold_name">Umbral de velocidad de conducción</string>
     <string name="pref_speed_threshold_desc">El mirroring se pausa a esta velocidad o por encima. Actual: %1$.3f m/s (%2$.1f km/h). Toca para cambiar entre valores predefinidos.</string>
+    <string name="pref_open_launcher_name">Abrir launcher</string>
+    <string name="pref_open_launcher_desc">Muestra tus apps elegidas en una rejilla, toca una para abrirla.</string>
+    <string name="pref_choose_launcher_apps_name">Elegir apps del launcher</string>
+    <string name="pref_choose_launcher_apps_desc">Elige qué apps instaladas aparecen en la rejilla del launcher.</string>
     <string name="pref_last_surface_info_name">Última info de pantalla</string>
     <string name="pref_last_surface_info_unknown">Aún no disponible — conecta primero a Android Auto.</string>
     <string name="pref_version_name">Versión</string>
+    <string name="pref_support_name">Apoya el proyecto</string>
+    <string name="pref_support_desc">Invítame a un café en Ko-fi.</string>
     <string name="pref_save_logs_name">Guardar registros</string>
     <string name="pref_save_logs_desc">Guarda los registros de logcat en un fichero.</string>
     <string name="pref_save_session_log_name">Guardar registro de sesión</string>
@@ -45,6 +52,11 @@
     <string name="mirror_state_driving">No disponible mientras conduces</string>
     <string name="mirror_state_inactive">El mirroring no está activo</string>
     <string name="mirror_state_requesting">Revisa el móvil para conceder el permiso</string>
+
+    <!-- Launcher -->
+    <string name="launcher_title">Launcher</string>
+    <string name="launcher_config_title">Elegir apps del launcher</string>
+    <string name="launcher_empty">Aún no has elegido ninguna app. Ve a Ajustes → Elegir apps del launcher.</string>
 
     <!-- Permission screen -->
     <string name="permission_button_grant">Conceder acceso</string>

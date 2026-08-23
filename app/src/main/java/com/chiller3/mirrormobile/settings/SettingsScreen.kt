@@ -34,6 +34,8 @@ import com.chiller3.mirrormobile.Preferences
 import com.chiller3.mirrormobile.SessionLog
 import com.txurtxil.lmonitor.R
 import com.chiller3.mirrormobile.extension.formattedString
+import com.chiller3.mirrormobile.launcher.LauncherActivity
+import com.chiller3.mirrormobile.launcher.LauncherConfigActivity
 import com.chiller3.mirrormobile.ui.AppScreen
 import com.chiller3.mirrormobile.ui.BetterSegmentedShapes
 import com.chiller3.mirrormobile.ui.Preference
@@ -159,6 +161,14 @@ fun SettingsScreen(viewModel: SettingsViewModel = viewModel()) {
                     viewModel.addAlert(SettingsAlert.BrowserNotFound)
                 }
             },
+            onSupportOpen = {
+                val uri = "https://ko-fi.com/txurtxil".toUri()
+                try {
+                    context.startActivity(Intent(Intent.ACTION_VIEW, uri))
+                } catch (_: ActivityNotFoundException) {
+                    viewModel.addAlert(SettingsAlert.BrowserNotFound)
+                }
+            },
             onSaveLogs = {
                 requestSafSaveLogs.launch(Logcat.FILENAME_DEFAULT)
             },
@@ -187,6 +197,7 @@ private fun SettingsContent(
     onSpeedThresholdCycle: () -> Unit,
     onDebugModeChange: (Boolean) -> Unit,
     onSourceRepoOpen: () -> Unit,
+    onSupportOpen: () -> Unit,
     onSaveLogs: () -> Unit,
     onSaveSessionLog: () -> Unit,
     contentPadding: PaddingValues = PaddingValues(),
@@ -284,6 +295,35 @@ private fun SettingsContent(
             )
         }
 
+        item(key = "header_launcher") {
+            PreferenceCategory(
+                title = { Text(text = stringResource(R.string.pref_header_launcher)) },
+                modifier = Modifier.animateItem(),
+            )
+        }
+
+        item(key = "open_launcher") {
+            val context = LocalContext.current
+            Preference(
+                onClick = { context.startActivity(Intent(context, LauncherActivity::class.java)) },
+                shapes = BetterSegmentedShapes.top(),
+                title = { Text(text = stringResource(R.string.pref_open_launcher_name)) },
+                summary = { Text(text = stringResource(R.string.pref_open_launcher_desc)) },
+                modifier = Modifier.animateItem(),
+            )
+        }
+
+        item(key = "choose_launcher_apps") {
+            val context = LocalContext.current
+            Preference(
+                onClick = { context.startActivity(Intent(context, LauncherConfigActivity::class.java)) },
+                shapes = BetterSegmentedShapes.bottom(),
+                title = { Text(text = stringResource(R.string.pref_choose_launcher_apps_name)) },
+                summary = { Text(text = stringResource(R.string.pref_choose_launcher_apps_desc)) },
+                modifier = Modifier.animateItem(),
+            )
+        }
+
         item(key = "about") {
             PreferenceCategory(
                 title = { Text(text = stringResource(R.string.pref_header_about)) },
@@ -311,9 +351,19 @@ private fun SettingsContent(
             Preference(
                 onClick = onSourceRepoOpen,
                 onLongClick = { onDebugModeChange(!isDebugMode) },
-                shapes = BetterSegmentedShapes.bottom(),
+                shapes = BetterSegmentedShapes.middle(),
                 title = { Text(text = stringResource(R.string.pref_version_name)) },
                 summary = { Text(text = versionSummary(isDebugMode)) },
+                modifier = Modifier.animateItem(),
+            )
+        }
+
+        item(key = "support") {
+            Preference(
+                onClick = onSupportOpen,
+                shapes = BetterSegmentedShapes.bottom(),
+                title = { Text(text = stringResource(R.string.pref_support_name)) },
+                summary = { Text(text = stringResource(R.string.pref_support_desc)) },
                 modifier = Modifier.animateItem(),
             )
         }
@@ -386,6 +436,7 @@ private fun PreviewSettingsScreen() {
                 onSpeedThresholdCycle = {},
                 onDebugModeChange = {},
                 onSourceRepoOpen = {},
+                onSupportOpen = {},
                 onSaveLogs = {},
                 onSaveSessionLog = {},
                 contentPadding = params.contentPadding,

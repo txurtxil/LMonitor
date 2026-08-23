@@ -18,6 +18,7 @@ class Preferences(context: Context) {
         private const val PREF_WAKE_LOCK = "wake_lock"
         private const val PREF_SPEED_THRESHOLD = "speed_threshold"
         private const val PREF_LAST_SURFACE_INFO = "last_surface_info"
+        private const val PREF_LAUNCHER_APPS = "launcher_apps"
 
         // Presets del umbral de velocidad (m/s), se ciclan al tocar la preferencia.
         // 0.001f es el valor original de upstream; se mantiene como preset[0] para que
@@ -54,4 +55,8 @@ class Preferences(context: Context) {
     var lastSurfaceInfo: String
         get() = prefs.getString(PREF_LAST_SURFACE_INFO, "") ?: ""
         set(value) = prefs.edit { putString(PREF_LAST_SURFACE_INFO, value) }
+
+    var launcherApps: Set<String>
+        get() = prefs.getStringSet(PREF_LAUNCHER_APPS, emptySet()) ?: emptySet()
+        set(value) = prefs.edit { putStringSet(PREF_LAUNCHER_APPS, value) }
 }

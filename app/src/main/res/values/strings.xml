@@ -6,6 +6,7 @@
     <!-- Preference headers -->
     <string name="pref_header_permissions">Permissions</string>
     <string name="pref_header_behavior">Behavior</string>
+    <string name="pref_header_launcher">Launcher</string>
     <string name="pref_header_about">About</string>
     <string name="pref_header_debug">Debug</string>
 
@@ -20,9 +21,15 @@
     <string name="pref_wake_lock_desc">Prevent the screen from turning off while mirroring is active. The screen will still dim when idle.</string>
     <string name="pref_speed_threshold_name">Driving speed threshold</string>
     <string name="pref_speed_threshold_desc">Screen mirroring pauses at or above this speed. Currently: %1$.3f m/s (%2$.1f km/h). Tap to cycle through presets.</string>
+    <string name="pref_open_launcher_name">Open launcher</string>
+    <string name="pref_open_launcher_desc">Show your chosen apps as a grid you can tap to launch.</string>
+    <string name="pref_choose_launcher_apps_name">Choose launcher apps</string>
+    <string name="pref_choose_launcher_apps_desc">Pick which installed apps show up in the launcher grid.</string>
     <string name="pref_last_surface_info_name">Last display info</string>
     <string name="pref_last_surface_info_unknown">Not available yet — connect to Android Auto once first.</string>
     <string name="pref_version_name">Version</string>
+    <string name="pref_support_name">Support the project</string>
+    <string name="pref_support_desc">Buy me a coffee on Ko-fi.</string>
     <string name="pref_save_logs_name">Save logs</string>
     <string name="pref_save_logs_desc">Save logcat logs to a file.</string>
     <string name="pref_save_session_log_name">Save session log</string>
@@ -45,6 +52,11 @@
     <string name="mirror_state_driving">Not available while driving</string>
     <string name="mirror_state_inactive">Mirroring is not active</string>
     <string name="mirror_state_requesting">Check phone for permission request</string>
+
+    <!-- Launcher -->
+    <string name="launcher_title">Launcher</string>
+    <string name="launcher_config_title">Choose launcher apps</string>
+    <string name="launcher_empty">No apps chosen yet. Go to Settings → Choose launcher apps to pick some.</string>
 
     <!-- Permission screen -->
     <string name="permission_button_grant">Grant access</string>

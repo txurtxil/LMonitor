@@ -1,0 +1,58 @@
+<!--
+    SPDX-FileCopyrightText: 2026 txurtxil
+    SPDX-License-Identifier: GPL-3.0-only
+-->
+<resources>
+    <!-- Preference headers -->
+    <string name="pref_header_permissions">Permisos</string>
+    <string name="pref_header_behavior">Comportamiento</string>
+    <string name="pref_header_about">Acerca de</string>
+    <string name="pref_header_debug">Depuración</string>
+
+    <!-- Main preferences -->
+    <string name="pref_missing_notifications_name">Falta el permiso de notificaciones</string>
+    <string name="pref_missing_notifications_desc">Necesario para mantener el proceso de mirroring activo en un servicio en primer plano.</string>
+    <string name="pref_missing_speed_name">Falta el permiso de velocidad del vehículo</string>
+    <string name="pref_missing_speed_desc">Necesario para detener el mirroring al conducir. Puede aparecer como una solicitud de ubicación, pero LMonitor no recibe más información que la velocidad del vehículo.</string>
+    <string name="pref_auto_start_name">Iniciar mirroring automáticamente</string>
+    <string name="pref_auto_start_desc">Solicita permisos de mirroring inmediatamente al abrir la app en Android Auto.</string>
+    <string name="pref_wake_lock_name">Mantener pantalla encendida</string>
+    <string name="pref_wake_lock_desc">Evita que la pantalla se apague mientras el mirroring está activo. Seguirá atenuándose si no hay actividad.</string>
+    <string name="pref_speed_threshold_name">Umbral de velocidad de conducción</string>
+    <string name="pref_speed_threshold_desc">El mirroring se pausa a esta velocidad o por encima. Actual: %1$.3f m/s (%2$.1f km/h). Toca para cambiar entre valores predefinidos.</string>
+    <string name="pref_last_surface_info_name">Última info de pantalla</string>
+    <string name="pref_last_surface_info_unknown">Aún no disponible — conecta primero a Android Auto.</string>
+    <string name="pref_version_name">Versión</string>
+    <string name="pref_save_logs_name">Guardar registros</string>
+    <string name="pref_save_logs_desc">Guarda los registros de logcat en un fichero.</string>
+    <string name="pref_save_session_log_name">Guardar registro de sesión</string>
+    <string name="pref_save_session_log_desc">Guarda el registro propio de eventos de conducción/mirroring de esta app en un fichero. A diferencia de los registros del sistema, no lo sobrescriben otras apps.</string>
+
+    <!-- Main alerts -->
+    <string name="alert_logcat_success">Registros guardados correctamente en %1$s</string>
+    <string name="alert_logcat_failure">Error al guardar los registros en %1$s: %2$s</string>
+    <string name="alert_session_log_success">Registro de sesión guardado correctamente en %1$s</string>
+    <string name="alert_session_log_failure">Error al guardar el registro de sesión en %1$s: %2$s</string>
+    <string name="alert_browser_not_found">No hay ningún navegador disponible.</string>
+    <string name="alert_documentsui_not_found">El gestor de ficheros integrado de Android (DocumentsUI) no está disponible.</string>
+
+    <!-- Mirror screen -->
+    <string name="mirror_bottom_unavailable">…</string>
+    <string name="mirror_button_start">Iniciar</string>
+    <string name="mirror_button_stop">Detener</string>
+    <string name="mirror_button_exit">Salir</string>
+    <string name="mirror_state_cancelled">Solicitud de captura cancelada</string>
+    <string name="mirror_state_driving">No disponible mientras conduces</string>
+    <string name="mirror_state_inactive">El mirroring no está activo</string>
+    <string name="mirror_state_requesting">Revisa el móvil para conceder el permiso</string>
+
+    <!-- Permission screen -->
+    <string name="permission_button_grant">Conceder acceso</string>
+    <string name="permission_message_rationale">El permiso de notificaciones es necesario para funcionar en segundo plano, y el de velocidad del vehículo para impedir su uso mientras conduces.</string>
+    <string name="permission_message_check_phone">Revisa el móvil para conceder los permisos.</string>
+
+    <!-- Notifications -->
+    <string name="notification_channel_persistent_name">Servicios en segundo plano</string>
+    <string name="notification_channel_persistent_desc">Notificación persistente para el mirroring de pantalla</string>
+    <string name="notification_mirroring_active">El mirroring de pantalla está activo</string>
+</resources>

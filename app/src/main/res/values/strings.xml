@@ -13,7 +13,7 @@
     <string name="pref_missing_notifications_name">Missing notifications permission</string>
     <string name="pref_missing_notifications_desc">Needed to keep screen mirroring process alive in a foreground service.</string>
     <string name="pref_missing_speed_name">Missing vehicle speed permission</string>
-    <string name="pref_missing_speed_desc">Needed to stop screen mirroring when driving. Android may show this as a location request, but MirrorMobile receives no information besides the vehicle speed.</string>
+    <string name="pref_missing_speed_desc">Needed to stop screen mirroring when driving. Android may show this as a location request, but LMonitor receives no information besides the vehicle speed.</string>
     <string name="pref_auto_start_name">Start mirroring automatically</string>
     <string name="pref_auto_start_desc">Immediately request screen mirroring permissions when opening the app in Android Auto.</string>
     <string name="pref_wake_lock_name">Keep screen on</string>

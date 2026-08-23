@@ -20,13 +20,19 @@
     <string name="pref_wake_lock_desc">Prevent the screen from turning off while mirroring is active. The screen will still dim when idle.</string>
     <string name="pref_speed_threshold_name">Driving speed threshold</string>
     <string name="pref_speed_threshold_desc">Screen mirroring pauses at or above this speed. Currently: %1$.3f m/s (%2$.1f km/h). Tap to cycle through presets.</string>
+    <string name="pref_last_surface_info_name">Last display info</string>
+    <string name="pref_last_surface_info_unknown">Not available yet — connect to Android Auto once first.</string>
     <string name="pref_version_name">Version</string>
     <string name="pref_save_logs_name">Save logs</string>
     <string name="pref_save_logs_desc">Save logcat logs to a file.</string>
+    <string name="pref_save_session_log_name">Save session log</string>
+    <string name="pref_save_session_log_desc">Save this app\'s own driving/mirroring event log to a file. Unlike system logs, it isn\'t overwritten by other apps.</string>
 
     <!-- Main alerts -->
     <string name="alert_logcat_success">Successfully saved logs to %1$s</string>
     <string name="alert_logcat_failure">Failed to save logs to %1$s: %2$s</string>
+    <string name="alert_session_log_success">Successfully saved session log to %1$s</string>
+    <string name="alert_session_log_failure">Failed to save session log to %1$s: %2$s</string>
     <string name="alert_browser_not_found">No web browser is available.</string>
     <string name="alert_documentsui_not_found">Android\'s builtin file manager (DocumentsUI) is unavailable.</string>
 

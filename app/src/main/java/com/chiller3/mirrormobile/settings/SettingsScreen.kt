@@ -31,6 +31,7 @@ import com.txurtxil.lmonitor.BuildConfig
 import com.chiller3.mirrormobile.Logcat
 import com.chiller3.mirrormobile.Permissions
 import com.chiller3.mirrormobile.Preferences
+import com.chiller3.mirrormobile.SessionLog
 import com.txurtxil.lmonitor.R
 import com.chiller3.mirrormobile.extension.formattedString
 import com.chiller3.mirrormobile.ui.AppScreen
@@ -52,6 +53,7 @@ fun SettingsScreen(viewModel: SettingsViewModel = viewModel()) {
     val autoStart = remember(reloadPrefs) { prefs.autoStart }
     val wakeLock = remember(reloadPrefs) { prefs.wakeLock }
     val speedThreshold = remember(reloadPrefs) { prefs.speedThreshold }
+    val lastSurfaceInfo = remember(reloadPrefs) { prefs.lastSurfaceInfo }
     val isDebugMode = remember(reloadPrefs) { prefs.isDebugMode }
 
     var reloadPerms by remember { mutableIntStateOf(0) }
@@ -74,6 +76,11 @@ fun SettingsScreen(viewModel: SettingsViewModel = viewModel()) {
     ) { uri ->
         uri?.let { viewModel.saveLogs(it) }
     }
+    val requestSafSaveSessionLog = rememberLauncherForActivityResult(
+        ActivityResultContracts.CreateDocument(SessionLog.MIMETYPE),
+    ) { uri ->
+        uri?.let { viewModel.saveSessionLog(it) }
+    }
 
     AppScreen(
         title = { Text(text = stringResource(R.string.app_name)) },
@@ -88,6 +95,15 @@ fun SettingsScreen(viewModel: SettingsViewModel = viewModel()) {
                     )
                     is SettingsAlert.LogcatFailed -> resources.getString(
                         R.string.alert_logcat_failure,
+                        alert.uri.formattedString,
+                        alert.error,
+                    )
+                    is SettingsAlert.SessionLogSucceeded -> resources.getString(
+                        R.string.alert_session_log_success,
+                        alert.uri.formattedString,
+                    )
+                    is SettingsAlert.SessionLogFailed -> resources.getString(
+                        R.string.alert_session_log_failure,
                         alert.uri.formattedString,
                         alert.error,
                     )
@@ -108,6 +124,7 @@ fun SettingsScreen(viewModel: SettingsViewModel = viewModel()) {
             autoStart = autoStart,
             wakeLock = wakeLock,
             speedThreshold = speedThreshold,
+            lastSurfaceInfo = lastSurfaceInfo,
             isDebugMode = isDebugMode,
             onNotificationsGrant = {
                 requestPermissions.launch(Permissions.NOTIFICATIONS)
@@ -145,6 +162,9 @@ fun SettingsScreen(viewModel: SettingsViewModel = viewModel()) {
             onSaveLogs = {
                 requestSafSaveLogs.launch(Logcat.FILENAME_DEFAULT)
             },
+            onSaveSessionLog = {
+                requestSafSaveSessionLog.launch(SessionLog.FILENAME_DEFAULT)
+            },
             contentPadding = params.contentPadding,
         )
     }
@@ -158,6 +178,7 @@ private fun SettingsContent(
     autoStart: Boolean,
     wakeLock: Boolean,
     speedThreshold: Float,
+    lastSurfaceInfo: String,
     isDebugMode: Boolean,
     onNotificationsGrant: () -> Unit,
     onSpeedGrant: () -> Unit,
@@ -167,6 +188,7 @@ private fun SettingsContent(
     onDebugModeChange: (Boolean) -> Unit,
     onSourceRepoOpen: () -> Unit,
     onSaveLogs: () -> Unit,
+    onSaveSessionLog: () -> Unit,
     contentPadding: PaddingValues = PaddingValues(),
 ) {
     data class MissingPermission(
@@ -269,11 +291,27 @@ private fun SettingsContent(
             )
         }
 
+        item(key = "last_surface_info") {
+            Preference(
+                onClick = {},
+                shapes = BetterSegmentedShapes.top(),
+                title = { Text(text = stringResource(R.string.pref_last_surface_info_name)) },
+                summary = {
+                    Text(
+                        text = lastSurfaceInfo.ifBlank {
+                            stringResource(R.string.pref_last_surface_info_unknown)
+                        }
+                    )
+                },
+                modifier = Modifier.animateItem(),
+            )
+        }
+
         item(key = "version") {
             Preference(
                 onClick = onSourceRepoOpen,
                 onLongClick = { onDebugModeChange(!isDebugMode) },
-                shapes = BetterSegmentedShapes.single(),
+                shapes = BetterSegmentedShapes.bottom(),
                 title = { Text(text = stringResource(R.string.pref_version_name)) },
                 summary = { Text(text = versionSummary(isDebugMode)) },
                 modifier = Modifier.animateItem(),
@@ -291,9 +329,19 @@ private fun SettingsContent(
             item(key = "save_logs") {
                 Preference(
                     onClick = onSaveLogs,
-                    shapes = BetterSegmentedShapes.single(),
+                    shapes = BetterSegmentedShapes.top(),
                     title = { Text(text = stringResource(R.string.pref_save_logs_name)) },
                     summary = { Text(text = stringResource(R.string.pref_save_logs_desc)) },
+                    modifier = Modifier.animateItem(),
+                )
+            }
+
+            item(key = "save_session_log") {
+                Preference(
+                    onClick = onSaveSessionLog,
+                    shapes = BetterSegmentedShapes.bottom(),
+                    title = { Text(text = stringResource(R.string.pref_save_session_log_name)) },
+                    summary = { Text(text = stringResource(R.string.pref_save_session_log_desc)) },
                     modifier = Modifier.animateItem(),
                 )
             }
@@ -329,6 +377,7 @@ private fun PreviewSettingsScreen() {
                 autoStart = true,
                 wakeLock = true,
                 speedThreshold = Preferences.SPEED_THRESHOLD_PRESETS[0],
+                lastSurfaceInfo = "1920x720 @ 160dpi",
                 isDebugMode = true,
                 onNotificationsGrant = {},
                 onSpeedGrant = {},
@@ -338,6 +387,7 @@ private fun PreviewSettingsScreen() {
                 onDebugModeChange = {},
                 onSourceRepoOpen = {},
                 onSaveLogs = {},
+                onSaveSessionLog = {},
                 contentPadding = params.contentPadding,
             )
         }

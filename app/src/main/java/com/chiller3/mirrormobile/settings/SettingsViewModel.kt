@@ -10,6 +10,7 @@ import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.chiller3.mirrormobile.Logcat
+import com.chiller3.mirrormobile.SessionLog
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -43,6 +44,20 @@ class SettingsViewModel : ViewModel() {
             } catch (e: Exception) {
                 Log.e(TAG, "Failed to dump logs to $uri", e)
                 _alerts.update { it + SettingsAlert.LogcatFailed(uri, e.toString()) }
+            }
+        }
+    }
+
+    fun saveSessionLog(uri: Uri) {
+        viewModelScope.launch {
+            try {
+                withContext(Dispatchers.IO) {
+                    SessionLog.dump(uri)
+                }
+                _alerts.update { it + SettingsAlert.SessionLogSucceeded(uri) }
+            } catch (e: Exception) {
+                Log.e(TAG, "Failed to dump session log to $uri", e)
+                _alerts.update { it + SettingsAlert.SessionLogFailed(uri, e.toString()) }
             }
         }
     }

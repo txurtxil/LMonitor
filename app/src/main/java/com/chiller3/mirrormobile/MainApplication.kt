@@ -18,6 +18,7 @@ class MainApplication : Application() {
         super.onCreate()
 
         Logcat.init(this)
+        SessionLog.init(this)
 
         val oldCrashHandler = Thread.getDefaultUncaughtExceptionHandler()
 

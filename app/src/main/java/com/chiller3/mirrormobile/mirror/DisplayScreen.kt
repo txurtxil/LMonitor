@@ -33,6 +33,7 @@ import androidx.lifecycle.DefaultLifecycleObserver
 import androidx.lifecycle.LifecycleOwner
 import com.chiller3.mirrormobile.Permissions
 import com.chiller3.mirrormobile.Preferences
+import com.chiller3.mirrormobile.SessionLog
 import com.txurtxil.lmonitor.R
 
 class DisplayScreen(carContext: CarContext) : Screen(carContext), DefaultLifecycleObserver,
@@ -48,6 +49,10 @@ class DisplayScreen(carContext: CarContext) : Screen(carContext), DefaultLifecyc
     private var state: DisplayState = DisplayState.DrivingInitial
         set(s) {
             Log.d(TAG, "Updating state: $field -> $s")
+            SessionLog.record("$field -> $s")
+            (s as? DisplayState.HaveSurfaceState)?.surfaceContainer?.let {
+                prefs.lastSurfaceInfo = "${it.width}x${it.height} @ ${it.dpi}dpi"
+            }
             field = s
             invalidate()
         }

@@ -54,6 +54,7 @@ fun SettingsScreen(viewModel: SettingsViewModel = viewModel()) {
     var reloadPrefs by remember { mutableIntStateOf(0) }
     val autoStart = remember(reloadPrefs) { prefs.autoStart }
     val wakeLock = remember(reloadPrefs) { prefs.wakeLock }
+    val stopOnDisconnect = remember(reloadPrefs) { prefs.stopOnDisconnect }
     val speedThreshold = remember(reloadPrefs) { prefs.speedThreshold }
     val lastSurfaceInfo = remember(reloadPrefs) { prefs.lastSurfaceInfo }
     val isDebugMode = remember(reloadPrefs) { prefs.isDebugMode }
@@ -125,6 +126,7 @@ fun SettingsScreen(viewModel: SettingsViewModel = viewModel()) {
             speedGranted = speedGranted,
             autoStart = autoStart,
             wakeLock = wakeLock,
+            stopOnDisconnect = stopOnDisconnect,
             speedThreshold = speedThreshold,
             lastSurfaceInfo = lastSurfaceInfo,
             isDebugMode = isDebugMode,
@@ -140,6 +142,10 @@ fun SettingsScreen(viewModel: SettingsViewModel = viewModel()) {
             },
             onWakeLockChange = { enabled ->
                 prefs.wakeLock = enabled
+                reloadPrefs++
+            },
+            onStopOnDisconnectChange = { enabled ->
+                prefs.stopOnDisconnect = enabled
                 reloadPrefs++
             },
             onSpeedThresholdCycle = {
@@ -187,6 +193,7 @@ private fun SettingsContent(
     speedGranted: Boolean,
     autoStart: Boolean,
     wakeLock: Boolean,
+    stopOnDisconnect: Boolean,
     speedThreshold: Float,
     lastSurfaceInfo: String,
     isDebugMode: Boolean,
@@ -194,6 +201,7 @@ private fun SettingsContent(
     onSpeedGrant: () -> Unit,
     onAutoStartChange: (Boolean) -> Unit,
     onWakeLockChange: (Boolean) -> Unit,
+    onStopOnDisconnectChange: (Boolean) -> Unit,
     onSpeedThresholdCycle: () -> Unit,
     onDebugModeChange: (Boolean) -> Unit,
     onSourceRepoOpen: () -> Unit,
@@ -273,6 +281,17 @@ private fun SettingsContent(
                 shapes = BetterSegmentedShapes.middle(),
                 title = { Text(text = stringResource(R.string.pref_wake_lock_name)) },
                 summary = { Text(text = stringResource(R.string.pref_wake_lock_desc)) },
+                modifier = Modifier.animateItem(),
+            )
+        }
+
+        item(key = "stop_on_disconnect") {
+            SwitchPreference(
+                checked = stopOnDisconnect,
+                onCheckedChange = onStopOnDisconnectChange,
+                shapes = BetterSegmentedShapes.middle(),
+                title = { Text(text = stringResource(R.string.pref_stop_on_disconnect_name)) },
+                summary = { Text(text = stringResource(R.string.pref_stop_on_disconnect_desc)) },
                 modifier = Modifier.animateItem(),
             )
         }
@@ -426,6 +445,7 @@ private fun PreviewSettingsScreen() {
                 speedGranted = false,
                 autoStart = true,
                 wakeLock = true,
+                stopOnDisconnect = true,
                 speedThreshold = Preferences.SPEED_THRESHOLD_PRESETS[0],
                 lastSurfaceInfo = "1920x720 @ 160dpi",
                 isDebugMode = true,
@@ -433,6 +453,7 @@ private fun PreviewSettingsScreen() {
                 onSpeedGrant = {},
                 onAutoStartChange = {},
                 onWakeLockChange = {},
+                onStopOnDisconnectChange = {},
                 onSpeedThresholdCycle = {},
                 onDebugModeChange = {},
                 onSourceRepoOpen = {},

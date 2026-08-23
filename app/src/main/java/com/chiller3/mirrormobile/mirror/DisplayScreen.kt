@@ -163,9 +163,17 @@ class DisplayScreen(carContext: CarContext) : Screen(carContext), DefaultLifecyc
 
         unregisterSpeedListener()
 
-        state.getTransitionOrNull(DisplayState.StopMirroring::class.java)
-            ?.stopMirroring()
-            ?.let { state = it }
+        if (prefs.stopOnDisconnect) {
+            state.getTransitionOrNull(DisplayState.StopMirroring::class.java)
+                ?.stopMirroring()
+                ?.let { state = it }
+        } else {
+            // Mantiene la sesion de captura viva (solo se separa la Surface) para
+            // poder reanudar sin volver a pedir permiso cuando Android Auto reconecte.
+            state.getTransitionOrNull(DisplayState.DetachSurface::class.java)
+                ?.detachSurface()
+                ?.let { state = it }
+        }
 
         onBinderGone()
         carContext.unbindService(this)

@@ -20,11 +20,18 @@ class Preferences(context: Context) {
         private const val PREF_LAST_SURFACE_INFO = "last_surface_info"
         private const val PREF_LAUNCHER_APPS = "launcher_apps"
         private const val PREF_STOP_ON_DISCONNECT = "stop_on_disconnect"
+        private const val PREF_WIDTH_OFFSET = "width_offset"
+        private const val PREF_HEIGHT_OFFSET = "height_offset"
 
         // Presets del umbral de velocidad (m/s), se ciclan al tocar la preferencia.
         // 0.001f es el valor original de upstream; se mantiene como preset[0] para que
         // el comportamiento no cambie salvo que el usuario elija otro explícitamente.
         val SPEED_THRESHOLD_PRESETS = floatArrayOf(0.001f, 0.5f, 1.0f, 1.5f, 2.0f)
+
+        // Presets del offset de pixeles (ancho/alto), se ciclan al tocar la preferencia.
+        // Valores de partida sin validar contra la resolucion real del B10 -- ajustar
+        // cuando se sepa que tamano de superficie da el coche de verdad.
+        val PIXEL_OFFSET_PRESETS = intArrayOf(0, 8, -8, 16, -16, 32, -32, 64, -64)
     }
 
     private val prefs = PreferenceManager.getDefaultSharedPreferences(context)
@@ -69,4 +76,15 @@ class Preferences(context: Context) {
     var stopOnDisconnect: Boolean
         get() = prefs.getBoolean(PREF_STOP_ON_DISCONNECT, true)
         set(enabled) = prefs.edit { putBoolean(PREF_STOP_ON_DISCONNECT, enabled) }
+
+    // Ajuste manual en pixeles del tamano pedido a createVirtualDisplay().
+    // Positivo encoge (recupera un borde cortado), negativo expande (rellena
+    // una franja negra). 0 = sin ajuste, comportamiento original.
+    var widthOffset: Int
+        get() = prefs.getInt(PREF_WIDTH_OFFSET, 0)
+        set(value) = prefs.edit { putInt(PREF_WIDTH_OFFSET, value) }
+
+    var heightOffset: Int
+        get() = prefs.getInt(PREF_HEIGHT_OFFSET, 0)
+        set(value) = prefs.edit { putInt(PREF_HEIGHT_OFFSET, value) }
 }

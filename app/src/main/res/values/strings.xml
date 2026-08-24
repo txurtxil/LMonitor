@@ -23,6 +23,10 @@
     <string name="pref_stop_on_disconnect_desc">Fully release screen capture when Android Auto disconnects. Turn off to keep the capture session running in the background so mirroring can resume without asking for permission again, at the cost of a persistent notification and battery usage while disconnected.</string>
     <string name="pref_speed_threshold_name">Driving speed threshold</string>
     <string name="pref_speed_threshold_desc">Screen mirroring pauses at or above this speed. Currently: %1$.3f m/s (%2$.1f km/h). Tap to cycle through presets.</string>
+    <string name="pref_width_offset_name">Width adjustment</string>
+    <string name="pref_width_offset_desc">Shrinks or expands the mirrored width in pixels to compensate for a cut-off edge or a black bar. Currently: %1$d px. Tap to cycle through presets.</string>
+    <string name="pref_height_offset_name">Height adjustment</string>
+    <string name="pref_height_offset_desc">Shrinks or expands the mirrored height in pixels to compensate for a cut-off edge or a black bar. Currently: %1$d px. Tap to cycle through presets.</string>
     <string name="pref_open_launcher_name">Open launcher</string>
     <string name="pref_open_launcher_desc">Show your chosen apps as a grid you can tap to launch.</string>
     <string name="pref_choose_launcher_apps_name">Choose launcher apps</string>

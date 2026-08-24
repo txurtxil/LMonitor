@@ -11,6 +11,7 @@ import android.view.Display
 import androidx.car.app.CarContext
 import androidx.car.app.SurfaceContainer
 import androidx.core.app.ActivityOptionsCompat
+import com.chiller3.mirrormobile.Preferences
 
 /**
  * This implements a state machine for [DisplayScreen] to clearly express what the valid states are,
@@ -153,9 +154,13 @@ sealed interface DisplayState {
             if (captureBinder.haveCaptureSession()) {
                 Log.d(TAG, "Attaching to capture session")
 
+                val prefs = Preferences(carContext)
+                val width = (surfaceContainer.width - prefs.widthOffset).coerceAtLeast(1)
+                val height = (surfaceContainer.height - prefs.heightOffset).coerceAtLeast(1)
+
                 captureBinder.startCapture(
-                    surfaceContainer.width,
-                    surfaceContainer.height,
+                    width,
+                    height,
                     surfaceContainer.dpi,
                     surfaceContainer.surface!!,
                 )

@@ -56,6 +56,8 @@ fun SettingsScreen(viewModel: SettingsViewModel = viewModel()) {
     val wakeLock = remember(reloadPrefs) { prefs.wakeLock }
     val stopOnDisconnect = remember(reloadPrefs) { prefs.stopOnDisconnect }
     val speedThreshold = remember(reloadPrefs) { prefs.speedThreshold }
+    val widthOffset = remember(reloadPrefs) { prefs.widthOffset }
+    val heightOffset = remember(reloadPrefs) { prefs.heightOffset }
     val lastSurfaceInfo = remember(reloadPrefs) { prefs.lastSurfaceInfo }
     val isDebugMode = remember(reloadPrefs) { prefs.isDebugMode }
 
@@ -128,6 +130,8 @@ fun SettingsScreen(viewModel: SettingsViewModel = viewModel()) {
             wakeLock = wakeLock,
             stopOnDisconnect = stopOnDisconnect,
             speedThreshold = speedThreshold,
+            widthOffset = widthOffset,
+            heightOffset = heightOffset,
             lastSurfaceInfo = lastSurfaceInfo,
             isDebugMode = isDebugMode,
             onNotificationsGrant = {
@@ -153,6 +157,20 @@ fun SettingsScreen(viewModel: SettingsViewModel = viewModel()) {
                 val idx = presets.indexOfFirst { it == prefs.speedThreshold }
                     .let { if (it == -1) 0 else it }
                 prefs.speedThreshold = presets[(idx + 1) % presets.size]
+                reloadPrefs++
+            },
+            onWidthOffsetCycle = {
+                val presets = Preferences.PIXEL_OFFSET_PRESETS
+                val idx = presets.indexOfFirst { it == prefs.widthOffset }
+                    .let { if (it == -1) 0 else it }
+                prefs.widthOffset = presets[(idx + 1) % presets.size]
+                reloadPrefs++
+            },
+            onHeightOffsetCycle = {
+                val presets = Preferences.PIXEL_OFFSET_PRESETS
+                val idx = presets.indexOfFirst { it == prefs.heightOffset }
+                    .let { if (it == -1) 0 else it }
+                prefs.heightOffset = presets[(idx + 1) % presets.size]
                 reloadPrefs++
             },
             onDebugModeChange = { enabled ->
@@ -195,6 +213,8 @@ private fun SettingsContent(
     wakeLock: Boolean,
     stopOnDisconnect: Boolean,
     speedThreshold: Float,
+    widthOffset: Int,
+    heightOffset: Int,
     lastSurfaceInfo: String,
     isDebugMode: Boolean,
     onNotificationsGrant: () -> Unit,
@@ -203,6 +223,8 @@ private fun SettingsContent(
     onWakeLockChange: (Boolean) -> Unit,
     onStopOnDisconnectChange: (Boolean) -> Unit,
     onSpeedThresholdCycle: () -> Unit,
+    onWidthOffsetCycle: () -> Unit,
+    onHeightOffsetCycle: () -> Unit,
     onDebugModeChange: (Boolean) -> Unit,
     onSourceRepoOpen: () -> Unit,
     onSupportOpen: () -> Unit,
@@ -299,7 +321,7 @@ private fun SettingsContent(
         item(key = "speed_threshold") {
             Preference(
                 onClick = onSpeedThresholdCycle,
-                shapes = BetterSegmentedShapes.bottom(),
+                shapes = BetterSegmentedShapes.middle(),
                 title = { Text(text = stringResource(R.string.pref_speed_threshold_name)) },
                 summary = {
                     Text(
@@ -307,6 +329,40 @@ private fun SettingsContent(
                             R.string.pref_speed_threshold_desc,
                             speedThreshold,
                             speedThreshold * 3.6f,
+                        )
+                    )
+                },
+                modifier = Modifier.animateItem(),
+            )
+        }
+
+        item(key = "width_offset") {
+            Preference(
+                onClick = onWidthOffsetCycle,
+                shapes = BetterSegmentedShapes.middle(),
+                title = { Text(text = stringResource(R.string.pref_width_offset_name)) },
+                summary = {
+                    Text(
+                        text = stringResource(
+                            R.string.pref_width_offset_desc,
+                            widthOffset,
+                        )
+                    )
+                },
+                modifier = Modifier.animateItem(),
+            )
+        }
+
+        item(key = "height_offset") {
+            Preference(
+                onClick = onHeightOffsetCycle,
+                shapes = BetterSegmentedShapes.bottom(),
+                title = { Text(text = stringResource(R.string.pref_height_offset_name)) },
+                summary = {
+                    Text(
+                        text = stringResource(
+                            R.string.pref_height_offset_desc,
+                            heightOffset,
                         )
                     )
                 },
@@ -447,6 +503,8 @@ private fun PreviewSettingsScreen() {
                 wakeLock = true,
                 stopOnDisconnect = true,
                 speedThreshold = Preferences.SPEED_THRESHOLD_PRESETS[0],
+                widthOffset = 0,
+                heightOffset = 0,
                 lastSurfaceInfo = "1920x720 @ 160dpi",
                 isDebugMode = true,
                 onNotificationsGrant = {},
@@ -455,6 +513,8 @@ private fun PreviewSettingsScreen() {
                 onWakeLockChange = {},
                 onStopOnDisconnectChange = {},
                 onSpeedThresholdCycle = {},
+                onWidthOffsetCycle = {},
+                onHeightOffsetCycle = {},
                 onDebugModeChange = {},
                 onSourceRepoOpen = {},
                 onSupportOpen = {},

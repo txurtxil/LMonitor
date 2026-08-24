@@ -31,14 +31,6 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.MirrorMobile"
         tools:targetApi="tiramisu">
-        <provider
-            android:name="rikka.shizuku.ShizukuProvider"
-            android:authorities="${applicationId}.shizuku"
-            android:multiprocess="false"
-            android:enabled="true"
-            android:exported="true"
-            android:permission="android.permission.INTERACT_ACROSS_USERS_FULL" />
-
         <meta-data
             android:name="androidx.car.app.minCarApiLevel"
             android:value="7" />

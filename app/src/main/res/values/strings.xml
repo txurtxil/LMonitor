@@ -33,9 +33,6 @@
     <string name="pref_open_launcher_desc">Show your chosen apps as a grid you can tap to launch.</string>
     <string name="pref_choose_launcher_apps_name">Choose launcher apps</string>
     <string name="pref_choose_launcher_apps_desc">Pick which installed apps show up in the launcher grid.</string>
-    <string name="pref_shizuku_status_name">Shizuku</string>
-    <string name="pref_shizuku_status_available">Available and connected.</string>
-    <string name="pref_shizuku_status_unavailable">Not available. Install Shizuku and start it (via ADB or root) to enable future features that need it.</string>
     <string name="pref_last_surface_info_name">Last display info</string>
     <string name="pref_last_surface_info_unknown">Not available yet — connect to Android Auto once first.</string>
     <string name="pref_version_name">Version</string>

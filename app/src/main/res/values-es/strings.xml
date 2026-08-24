@@ -33,9 +33,6 @@
     <string name="pref_open_launcher_desc">Muestra tus apps elegidas en una rejilla, toca una para abrirla.</string>
     <string name="pref_choose_launcher_apps_name">Elegir apps del launcher</string>
     <string name="pref_choose_launcher_apps_desc">Elige qué apps instaladas aparecen en la rejilla del launcher.</string>
-    <string name="pref_shizuku_status_name">Shizuku</string>
-    <string name="pref_shizuku_status_available">Disponible y conectado.</string>
-    <string name="pref_shizuku_status_unavailable">No disponible. Instala Shizuku e inícialo (por ADB o root) para poder usar futuras funciones que lo necesiten.</string>
     <string name="pref_last_surface_info_name">Última info de pantalla</string>
     <string name="pref_last_surface_info_unknown">Aún no disponible — conecta primero a Android Auto.</string>
     <string name="pref_version_name">Versión</string>

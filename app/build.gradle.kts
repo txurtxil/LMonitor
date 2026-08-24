@@ -186,8 +186,6 @@ dependencies {
     implementation(libs.androidx.lifecycle.viewmodel.compose)
     implementation(libs.androidx.preference.ktx)
     implementation(libs.material)
-    implementation(libs.shizuku.api)
-    implementation(libs.shizuku.provider)
     debugImplementation(libs.androidx.compose.ui.tooling)
 }
 

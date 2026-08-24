@@ -74,6 +74,11 @@
             <intent-filter>
                 <action android:name="androidx.car.app.CarAppService" />
                 <category android:name="androidx.car.app.category.NAVIGATION" />
+                <!-- Categorias internas de Google usadas por apps de proyeccion.
+                     No documentadas publicamente; anadidas como experimento para
+                     que el host real las liste en la rejilla. -->
+                <category android:name="com.google.android.gms.car.category.CATEGORY_PROJECTION" />
+                <category android:name="com.google.android.gms.car.category.CATEGORY_PROJECTION_OEM" />
             </intent-filter>
         </service>
     </application>

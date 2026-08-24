@@ -20,7 +20,7 @@
     <string name="pref_wake_lock_name">Mantener pantalla encendida</string>
     <string name="pref_wake_lock_desc">Evita que la pantalla se apague mientras el mirroring está activo. Seguirá atenuándose si no hay actividad.</string>
     <string name="pref_force_horizontal_name">Forzar horizontal</string>
-    <string name="pref_force_horizontal_desc">Fuerza el teléfono entero a orientación horizontal mediante un ajuste del sistema. Necesita el permiso especial "Modificar ajustes del sistema", concedido una vez en una pantalla aparte. Desactívalo para restaurar la rotación automática normal.</string>
+    <string name="pref_force_horizontal_desc">Fuerza el teléfono entero a orientación horizontal mediante un ajuste del sistema, y lo vuelve a aplicar automáticamente cada vez que se conecta Android Auto. Necesita el permiso especial "Modificar ajustes del sistema", concedido una vez en una pantalla aparte. Desactívalo para restaurar la rotación automática normal.</string>
     <string name="pref_stop_on_disconnect_name">Detener mirroring al desconectar</string>
     <string name="pref_stop_on_disconnect_desc">Libera por completo la captura de pantalla al desconectar Android Auto. Desactívalo para mantener la sesión de captura en segundo plano y reanudar sin volver a pedir permiso, a costa de una notificación persistente y consumo de batería mientras esté desconectado.</string>
     <string name="pref_speed_threshold_name">Umbral de velocidad de conducción</string>

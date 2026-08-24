@@ -34,6 +34,8 @@ import androidx.lifecycle.LifecycleOwner
 import com.chiller3.mirrormobile.Permissions
 import com.chiller3.mirrormobile.Preferences
 import com.chiller3.mirrormobile.SessionLog
+import com.chiller3.mirrormobile.extension.canWriteSystemSettings
+import com.chiller3.mirrormobile.extension.forceLandscapeRotation
 import com.txurtxil.lmonitor.R
 
 class DisplayScreen(carContext: CarContext) : Screen(carContext), DefaultLifecycleObserver,
@@ -143,6 +145,10 @@ class DisplayScreen(carContext: CarContext) : Screen(carContext), DefaultLifecyc
 
     override fun onCreate(owner: LifecycleOwner) {
         Log.d(TAG, "onCreate()")
+
+        if (prefs.forceHorizontal && carContext.canWriteSystemSettings()) {
+            carContext.forceLandscapeRotation()
+        }
 
         appManager.setSurfaceCallback(this)
 

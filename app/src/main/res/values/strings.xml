@@ -19,6 +19,8 @@
     <string name="pref_auto_start_desc">Immediately request screen mirroring permissions when opening the app in Android Auto.</string>
     <string name="pref_wake_lock_name">Keep screen on</string>
     <string name="pref_wake_lock_desc">Prevent the screen from turning off while mirroring is active. The screen will still dim when idle.</string>
+    <string name="pref_force_horizontal_name">Force horizontal</string>
+    <string name="pref_force_horizontal_desc">Forces the whole phone into landscape orientation via a system setting. Needs the special "Modify system settings" permission, granted once on a separate screen. Turn off to restore normal auto-rotation.</string>
     <string name="pref_stop_on_disconnect_name">Stop mirroring on disconnect</string>
     <string name="pref_stop_on_disconnect_desc">Fully release screen capture when Android Auto disconnects. Turn off to keep the capture session running in the background so mirroring can resume without asking for permission again, at the cost of a persistent notification and battery usage while disconnected.</string>
     <string name="pref_speed_threshold_name">Driving speed threshold</string>

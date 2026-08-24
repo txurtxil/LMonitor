@@ -22,6 +22,7 @@ class Preferences(context: Context) {
         private const val PREF_STOP_ON_DISCONNECT = "stop_on_disconnect"
         private const val PREF_WIDTH_OFFSET = "width_offset"
         private const val PREF_HEIGHT_OFFSET = "height_offset"
+        private const val PREF_FORCE_HORIZONTAL = "force_horizontal"
 
         // Presets del umbral de velocidad (m/s), se ciclan al tocar la preferencia.
         // 0.001f es el valor original de upstream; se mantiene como preset[0] para que
@@ -87,4 +88,10 @@ class Preferences(context: Context) {
     var heightOffset: Int
         get() = prefs.getInt(PREF_HEIGHT_OFFSET, 0)
         set(value) = prefs.edit { putInt(PREF_HEIGHT_OFFSET, value) }
+
+    // Solo recuerda la ultima eleccion del usuario -- forzar/restaurar de verdad
+    // ocurre en SettingsScreen al cambiar este valor.
+    var forceHorizontal: Boolean
+        get() = prefs.getBoolean(PREF_FORCE_HORIZONTAL, false)
+        set(enabled) = prefs.edit { putBoolean(PREF_FORCE_HORIZONTAL, enabled) }
 }

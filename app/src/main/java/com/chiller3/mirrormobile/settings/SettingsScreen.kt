@@ -8,6 +8,7 @@ package com.chiller3.mirrormobile.settings
 import android.content.ActivityNotFoundException
 import android.content.Intent
 import android.content.res.Configuration
+import android.provider.Settings
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.layout.PaddingValues
@@ -33,7 +34,10 @@ import com.chiller3.mirrormobile.Permissions
 import com.chiller3.mirrormobile.Preferences
 import com.chiller3.mirrormobile.SessionLog
 import com.txurtxil.lmonitor.R
+import com.chiller3.mirrormobile.extension.canWriteSystemSettings
+import com.chiller3.mirrormobile.extension.forceLandscapeRotation
 import com.chiller3.mirrormobile.extension.formattedString
+import com.chiller3.mirrormobile.extension.restoreAutoRotation
 import com.chiller3.mirrormobile.launcher.LauncherActivity
 import com.chiller3.mirrormobile.launcher.LauncherConfigActivity
 import com.chiller3.mirrormobile.ui.AppScreen
@@ -55,6 +59,7 @@ fun SettingsScreen(viewModel: SettingsViewModel = viewModel()) {
     val autoStart = remember(reloadPrefs) { prefs.autoStart }
     val wakeLock = remember(reloadPrefs) { prefs.wakeLock }
     val stopOnDisconnect = remember(reloadPrefs) { prefs.stopOnDisconnect }
+    val forceHorizontal = remember(reloadPrefs) { prefs.forceHorizontal }
     val speedThreshold = remember(reloadPrefs) { prefs.speedThreshold }
     val widthOffset = remember(reloadPrefs) { prefs.widthOffset }
     val heightOffset = remember(reloadPrefs) { prefs.heightOffset }
@@ -85,6 +90,15 @@ fun SettingsScreen(viewModel: SettingsViewModel = viewModel()) {
         ActivityResultContracts.CreateDocument(SessionLog.MIMETYPE),
     ) { uri ->
         uri?.let { viewModel.saveSessionLog(it) }
+    }
+    val requestWriteSettings = rememberLauncherForActivityResult(
+        ActivityResultContracts.StartActivityForResult(),
+    ) {
+        if (context.canWriteSystemSettings()) {
+            context.forceLandscapeRotation()
+            prefs.forceHorizontal = true
+            reloadPrefs++
+        }
     }
 
     AppScreen(
@@ -129,6 +143,7 @@ fun SettingsScreen(viewModel: SettingsViewModel = viewModel()) {
             autoStart = autoStart,
             wakeLock = wakeLock,
             stopOnDisconnect = stopOnDisconnect,
+            forceHorizontal = forceHorizontal,
             speedThreshold = speedThreshold,
             widthOffset = widthOffset,
             heightOffset = heightOffset,
@@ -151,6 +166,26 @@ fun SettingsScreen(viewModel: SettingsViewModel = viewModel()) {
             onStopOnDisconnectChange = { enabled ->
                 prefs.stopOnDisconnect = enabled
                 reloadPrefs++
+            },
+            onForceHorizontalChange = { enabled ->
+                if (enabled) {
+                    if (context.canWriteSystemSettings()) {
+                        context.forceLandscapeRotation()
+                        prefs.forceHorizontal = true
+                        reloadPrefs++
+                    } else {
+                        requestWriteSettings.launch(
+                            Intent(
+                                Settings.ACTION_MANAGE_WRITE_SETTINGS,
+                                "package:${context.packageName}".toUri(),
+                            )
+                        )
+                    }
+                } else {
+                    context.restoreAutoRotation()
+                    prefs.forceHorizontal = false
+                    reloadPrefs++
+                }
             },
             onSpeedThresholdCycle = {
                 val presets = Preferences.SPEED_THRESHOLD_PRESETS
@@ -212,6 +247,7 @@ private fun SettingsContent(
     autoStart: Boolean,
     wakeLock: Boolean,
     stopOnDisconnect: Boolean,
+    forceHorizontal: Boolean,
     speedThreshold: Float,
     widthOffset: Int,
     heightOffset: Int,
@@ -222,6 +258,7 @@ private fun SettingsContent(
     onAutoStartChange: (Boolean) -> Unit,
     onWakeLockChange: (Boolean) -> Unit,
     onStopOnDisconnectChange: (Boolean) -> Unit,
+    onForceHorizontalChange: (Boolean) -> Unit,
     onSpeedThresholdCycle: () -> Unit,
     onWidthOffsetCycle: () -> Unit,
     onHeightOffsetCycle: () -> Unit,
@@ -303,6 +340,17 @@ private fun SettingsContent(
                 shapes = BetterSegmentedShapes.middle(),
                 title = { Text(text = stringResource(R.string.pref_wake_lock_name)) },
                 summary = { Text(text = stringResource(R.string.pref_wake_lock_desc)) },
+                modifier = Modifier.animateItem(),
+            )
+        }
+
+        item(key = "force_horizontal") {
+            SwitchPreference(
+                checked = forceHorizontal,
+                onCheckedChange = onForceHorizontalChange,
+                shapes = BetterSegmentedShapes.middle(),
+                title = { Text(text = stringResource(R.string.pref_force_horizontal_name)) },
+                summary = { Text(text = stringResource(R.string.pref_force_horizontal_desc)) },
                 modifier = Modifier.animateItem(),
             )
         }
@@ -502,6 +550,7 @@ private fun PreviewSettingsScreen() {
                 autoStart = true,
                 wakeLock = true,
                 stopOnDisconnect = true,
+                forceHorizontal = false,
                 speedThreshold = Preferences.SPEED_THRESHOLD_PRESETS[0],
                 widthOffset = 0,
                 heightOffset = 0,
@@ -512,6 +561,7 @@ private fun PreviewSettingsScreen() {
                 onAutoStartChange = {},
                 onWakeLockChange = {},
                 onStopOnDisconnectChange = {},
+                onForceHorizontalChange = {},
                 onSpeedThresholdCycle = {},
                 onWidthOffsetCycle = {},
                 onHeightOffsetCycle = {},

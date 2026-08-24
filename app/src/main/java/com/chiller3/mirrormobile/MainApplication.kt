@@ -7,6 +7,7 @@ package com.chiller3.mirrormobile
 
 import android.app.Application
 import android.util.Log
+import com.chiller3.mirrormobile.extension.ShizukuStatus
 import java.io.File
 
 class MainApplication : Application() {
@@ -19,6 +20,7 @@ class MainApplication : Application() {
 
         Logcat.init(this)
         SessionLog.init(this)
+        ShizukuStatus.init()
 
         val oldCrashHandler = Thread.getDefaultUncaughtExceptionHandler()
 

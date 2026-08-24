@@ -16,6 +16,7 @@ import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.material3.ExperimentalMaterial3ExpressiveApi
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
@@ -40,6 +41,7 @@ import com.chiller3.mirrormobile.extension.formattedString
 import com.chiller3.mirrormobile.extension.restoreAutoRotation
 import com.chiller3.mirrormobile.launcher.LauncherActivity
 import com.chiller3.mirrormobile.launcher.LauncherConfigActivity
+import com.chiller3.mirrormobile.extension.ShizukuStatus
 import com.chiller3.mirrormobile.ui.AppScreen
 import com.chiller3.mirrormobile.ui.BetterSegmentedShapes
 import com.chiller3.mirrormobile.ui.Preference
@@ -454,10 +456,29 @@ private fun SettingsContent(
             )
         }
 
-        item(key = "last_surface_info") {
+        item(key = "shizuku_status") {
+            val shizukuAvailable by ShizukuStatus.isAvailable.collectAsState()
             Preference(
                 onClick = {},
                 shapes = BetterSegmentedShapes.top(),
+                title = { Text(text = stringResource(R.string.pref_shizuku_status_name)) },
+                summary = {
+                    Text(
+                        text = if (shizukuAvailable) {
+                            stringResource(R.string.pref_shizuku_status_available)
+                        } else {
+                            stringResource(R.string.pref_shizuku_status_unavailable)
+                        }
+                    )
+                },
+                modifier = Modifier.animateItem(),
+            )
+        }
+
+        item(key = "last_surface_info") {
+            Preference(
+                onClick = {},
+                shapes = BetterSegmentedShapes.middle(),
                 title = { Text(text = stringResource(R.string.pref_last_surface_info_name)) },
                 summary = {
                     Text(
